@@ -41,4 +41,15 @@ impl<T> ostack<T> {
       self.elems.push(subtop);
     }
   }
+
+  /// apply an arithemtic or logic operation to the
+  /// top two elements of an ostack
+  pub fn fn_apply(&mut self, func: fn(T, T) -> T) {
+    if self.elems.len() > 1 {
+      let top    = self.elems.pop();
+      let subtop = self.elems.pop();
+
+      self.elems.push(func(top, subtop))
+    }
+  }
 }
