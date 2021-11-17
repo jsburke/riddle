@@ -77,6 +77,32 @@ impl<T> CircStack<T> {
       }
     }
   }
+
+  /// one of the "circular" functions
+  /// pop the top and shove it underneath
+  pub fn rotate_from_top(&mut self) {
+    let top = self.elems.pop();
+
+    if top.is_some() {
+      self.elems.reverse(); // flip rest of stack
+      self.elems.push(top.unwrap()); // push old top
+      self.elems.reverse(); // flip again and it's the bottom
+    }
+  }
+
+  /// The other "circular" function
+  /// slip the bottom element from the stack out
+  /// and place it on the top
+  pub fn rotate_from_bottom(&mut self) {
+    self.elems.reverse(); // flip stack
+    let bottom = self.elems.pop(); // grab the bottom
+
+    if bottom.is_some() {
+      self.elems.reverse(); // flip back again
+      self.elems.push(bottom.unwrap()); // bottom now on top
+    }
+  }
+
 }
 
 #[cfg(test)]
@@ -208,6 +234,48 @@ mod tests {
     cstack.apply_one(|x| !x);
 
     assert_eq!(cstack.pop().unwrap(), !val_0);
+  }
+
+  #[test]
+  fn test_circstack_top_rotate() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = 51; // TODO: find way to make random isize
+    let val_1 = -22; // TODO: rand array, list?
+    let val_2 = 0;
+    let val_3 = 13;
+    cstack.push(val_0);
+    cstack.push(val_1);
+    cstack.push(val_2);
+    cstack.push(val_3);
+
+    cstack.rotate_from_top(); 
+
+    assert_eq!(cstack.pop().unwrap(), val_2);
+    assert_eq!(cstack.pop().unwrap(), val_1);
+    assert_eq!(cstack.pop().unwrap(), val_0);
+    assert_eq!(cstack.pop().unwrap(), val_3);
+  }
+
+  #[test]
+  fn test_circstack_bottom_rotate() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = -151; // TODO: find way to make random isize
+    let val_1 = 222; // TODO: rand array, list?
+    let val_2 = 1;
+    let val_3 = -40;
+    cstack.push(val_0);
+    cstack.push(val_1);
+    cstack.push(val_2);
+    cstack.push(val_3);
+
+    cstack.rotate_from_bottom(); 
+
+    assert_eq!(cstack.pop().unwrap(), val_0);
+    assert_eq!(cstack.pop().unwrap(), val_3);
+    assert_eq!(cstack.pop().unwrap(), val_2);
+    assert_eq!(cstack.pop().unwrap(), val_1);
   }
 
 }
