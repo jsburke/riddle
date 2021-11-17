@@ -52,9 +52,19 @@ impl<T> CircStack<T> {
     }
   }
 
+  /// apply and arithmetic or logical operation
+  /// to the top element of a CircStack
+  pub fn apply_one(&mut self, func: fn(T) -> T) {
+    let top    = self.elems.pop();
+
+    if top.is_some() {
+      self.elems.push(func(top.unwrap()));
+    }
+  }
+
   /// apply an arithemtic or logic operation to the
-  /// top two elements of an CircStack
-  pub fn fn_apply(&mut self, func: fn(T, T) -> T) {
+  /// top two elements of a CircStack
+  pub fn apply_two(&mut self, func: fn(T, T) -> T) {
     let top    = self.elems.pop();
     let subtop = self.elems.pop();
 
@@ -130,6 +140,74 @@ mod tests {
 
     assert_eq!(cstack.pop().unwrap(), val_0);
     assert_eq!(cstack.pop().unwrap(), val_1);
+  }
+
+  #[test]
+  fn test_circstack_add() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = 43; // TODO: find way to make random isize
+    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    cstack.push(val_0);
+    cstack.push(val_1);
+
+    cstack.apply_two(|x, y| x + y);
+
+    assert_eq!(cstack.pop().unwrap(), val_0 + val_1);
+  }
+
+  #[test]
+  fn test_circstack_sub() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = 43; // TODO: find way to make random isize
+    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    cstack.push(val_0);
+    cstack.push(val_1);
+
+    cstack.apply_two(|x, y| x - y);
+
+    assert_eq!(cstack.pop().unwrap(), val_1 - val_0);
+  }
+
+  #[test]
+  fn test_circstack_mul() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = 43; // TODO: find way to make random isize
+    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    cstack.push(val_0);
+    cstack.push(val_1);
+
+    cstack.apply_two(|x, y| x * y);
+
+    assert_eq!(cstack.pop().unwrap(), val_0 * val_1);
+  }
+
+  #[test]
+  fn test_circstack_div() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = 43; // TODO: find way to make random isize
+    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    cstack.push(val_0);
+    cstack.push(val_1);
+
+    cstack.apply_two(|x, y| x / y);
+
+    assert_eq!(cstack.pop().unwrap(), val_1 / val_0);
+  }
+
+  #[test]
+  fn test_circstack_not() {
+    let mut cstack: CircStack<isize> = CircStack::new();
+
+    let val_0 = 51; // TODO: find way to make random isize
+    cstack.push(val_0);
+
+    cstack.apply_one(|x| !x);
+
+    assert_eq!(cstack.pop().unwrap(), !val_0);
   }
 
 }
