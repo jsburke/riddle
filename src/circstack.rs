@@ -109,6 +109,9 @@ impl<T> CircStack<T> {
 mod tests {
   use super::*;
 
+  extern crate rand;
+  use rand::Rng;
+
   #[test]
   fn test_circstack_empty() {
     let cstack: CircStack<isize> = CircStack::new();
@@ -135,7 +138,9 @@ mod tests {
   #[test]
   fn test_circstack_push_1() {
     let mut cstack: CircStack<isize> = CircStack::new();
-    let push_val = 12; // TODO: find way to make random isize
+    let mut rng = rand::thread_rng();
+
+    let push_val: isize = rng.gen();
     cstack.push(push_val);
 
     assert_eq!(cstack.is_empty(), false);
@@ -146,7 +151,9 @@ mod tests {
   #[test]
   fn test_circstack_pop_1() {
     let mut cstack: CircStack<isize> = CircStack::new();
-    let test_val = 7; // TODO: find way to make random isize
+    let mut rng = rand::thread_rng();
+
+    let test_val: isize = rng.gen();
     cstack.push(test_val);
 
     assert_eq!(cstack.pop().unwrap(), test_val);
@@ -156,9 +163,10 @@ mod tests {
   #[test]
   fn test_circstack_swap_2() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 7;  // TODO: find way to make random isize
-    let val_1 = 13; // TODO: find way to make DIFFERENT random isize
+    let val_0: isize = rng.gen();
+    let val_1: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
 
@@ -169,11 +177,12 @@ mod tests {
   }
 
   #[test]
-  fn test_circstack_add() {
+  fn test_circstack_add() { // arith tests need controls for overflows
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 43; // TODO: find way to make random isize
-    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    let val_0: isize = rng.gen();
+    let val_1: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
 
@@ -185,9 +194,10 @@ mod tests {
   #[test]
   fn test_circstack_sub() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 43; // TODO: find way to make random isize
-    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    let val_0: isize = rng.gen();
+    let val_1: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
 
@@ -199,9 +209,10 @@ mod tests {
   #[test]
   fn test_circstack_mul() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 43; // TODO: find way to make random isize
-    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    let val_0: isize = rng.gen();
+    let val_1: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
 
@@ -213,9 +224,10 @@ mod tests {
   #[test]
   fn test_circstack_div() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 43; // TODO: find way to make random isize
-    let val_1 = 22; // TODO: find way to make DIFFERENT random isize
+    let val_0: isize = rng.gen();
+    let val_1: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
 
@@ -227,8 +239,9 @@ mod tests {
   #[test]
   fn test_circstack_not() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 51; // TODO: find way to make random isize
+    let val_0: isize = rng.gen();
     cstack.push(val_0);
 
     cstack.apply_one(|x| !x);
@@ -239,11 +252,12 @@ mod tests {
   #[test]
   fn test_circstack_top_rotate() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = 51; // TODO: find way to make random isize
-    let val_1 = -22; // TODO: rand array, list?
-    let val_2 = 0;
-    let val_3 = 13;
+    let val_0: isize = rng.gen(); // generalize to n length array of isize
+    let val_1: isize = rng.gen();
+    let val_2: isize = rng.gen();
+    let val_3: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
     cstack.push(val_2);
@@ -260,11 +274,12 @@ mod tests {
   #[test]
   fn test_circstack_bottom_rotate() {
     let mut cstack: CircStack<isize> = CircStack::new();
+    let mut rng = rand::thread_rng();
 
-    let val_0 = -151; // TODO: find way to make random isize
-    let val_1 = 222; // TODO: rand array, list?
-    let val_2 = 1;
-    let val_3 = -40;
+    let val_0: isize = rng.gen(); // generalize to n length array of isize
+    let val_1: isize = rng.gen();
+    let val_2: isize = rng.gen();
+    let val_3: isize = rng.gen();
     cstack.push(val_0);
     cstack.push(val_1);
     cstack.push(val_2);
