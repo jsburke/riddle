@@ -1,4 +1,4 @@
-use meta::*;
+use crate::circstack;
 
 /// The direction enum is used to both indicate how
 /// actors move and face in Riddle
@@ -11,7 +11,7 @@ enum Direction {
 
 /// Coords describes the location of actors in a given
 /// stage in Riddle
-type Coord = (StageUnit, StageUnit);
+type Coord = (u8, u8);
 
 /// Actors in Riddle are elements that operate within
 /// a given stage with one being player controllable,
@@ -24,9 +24,8 @@ pub struct Actor {
   /// which way is the actor facing
   dir:       Direction,
 
-
   is_player: bool,
 
   /// if player, current stacks
-  stacks:    Vec<*Circstack<StackType>>,
+  stacks:    Vec<*mut circstack::CircStack<isize>>,
 }

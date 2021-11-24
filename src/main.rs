@@ -1,6 +1,6 @@
 mod circstack;
 mod stage;
-mod location;
+mod actor;
 
 fn main() {
     println!("Hello, world!");
